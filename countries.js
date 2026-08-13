@@ -545,7 +545,7 @@ window.COUNTRIES = [
     },
     {
         "code":  "kp",
-        "name":  "조선",
+        "name":  "북한",
         "capital":  "Pyongyang",
         "lat":  40,
         "lng":  127,
