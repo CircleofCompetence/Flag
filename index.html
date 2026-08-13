@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#071b33" />
+  <meta name="description" content="전 세계 국기를 맞히며 나라의 위치와 수도를 배우는 어린이 퀴즈" />
+  <link rel="icon" href="public/favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-mobile.css" />
+  <title>하준이의 국기게임</title>
+</head>
+<body>
+  <main id="intro" class="screen intro-screen">
+    <div class="stars" aria-hidden="true"></div>
+    <button class="icon-button sound-toggle" type="button" aria-label="소리 끄기">🔊</button>
+    <section class="intro-content">
+      <div class="brand-mark"><span>✦</span><div>HAJUN&apos;S<br><b>WORLD TOUR</b></div></div>
+      <div class="hero-globe" aria-hidden="true">
+        <img src="assets/world-map-optimized.jpg" alt="" />
+        <span class="orbit orbit-one"></span><span class="orbit orbit-two"></span>
+        <span class="floating-flag flag-a"><img src="assets/flags/kr.png" alt="" /></span>
+        <span class="floating-flag flag-b"><img src="assets/flags/br.png" alt="" /></span>
+        <span class="floating-flag flag-c"><img src="assets/flags/fr.png" alt="" /></span>
+      </div>
+      <p class="kicker">유명한 100개 나라로 떠나는 국기 탐험</p>
+      <h1>하준이의<br><em>국기게임</em></h1>
+      <p class="intro-copy">매 게임 새로운 10개 나라가 기다리고 있어!<br>국기를 맞히고 세계 곳곳을 여행해 보자.</p>
+      <div class="feature-row">
+        <span><b>100</b>개 나라</span><i></i><span><b>10</b>문제</span><i></i><span>지도 탐험</span>
+      </div>
+      <button id="start-button" class="primary-button" type="button"><span>탐험 시작하기</span><b>→</b></button>
+    </section>
+  </main>
+
+  <main id="game" class="screen game-screen" hidden>
+    <header class="game-header">
+      <div class="header-brand"><span>✦</span><div>하준이의<br><b>국기게임</b></div></div>
+      <button class="icon-button sound-toggle" type="button" aria-label="소리 끄기">🔊</button>
+    </header>
+    <section class="progress-area">
+      <div class="progress-copy"><span>QUESTION <b id="question-number">1</b> / 10</span><span class="score-pill">★ <b id="score">0</b></span></div>
+      <div id="progress-track" class="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="10" aria-valuenow="1"><div id="progress-bar"></div></div>
+    </section>
+
+    <section id="quiz-view" class="quiz-card game-view">
+      <p class="question-kicker">FLAG QUIZ</p>
+      <h2>이 국기는 어느 나라일까?</h2>
+      <div class="flag-stage"><img id="flag" src="" alt="문제 국기" /></div>
+      <div id="answers" class="answers"></div>
+    </section>
+
+    <section id="feedback" class="feedback-card game-view" tabindex="-1" aria-live="polite" hidden>
+      <div class="feedback-heading">
+        <span id="feedback-emoji" class="feedback-emoji"></span>
+        <div><p id="feedback-message"></p><h2 id="country-name"></h2></div>
+      </div>
+      <div class="answer-flag"><img id="answer-flag" src="" alt="정답 국기" /></div>
+      <div id="map" class="real-map" role="img">
+        <img src="assets/world-map-optimized.jpg" alt="세계 지형도" />
+        <div id="pin" class="map-pin"><span></span><b id="pin-label"></b></div>
+        <div class="map-shade"></div>
+      </div>
+      <div class="country-details">
+        <div class="detail-icon">★</div>
+        <div><small>CAPITAL · 수도</small><strong id="capital"></strong><p id="fact"></p></div>
+      </div>
+      <button id="next-button" class="primary-button" type="button"><span>다음 문제</span><b>→</b></button>
+    </section>
+  </main>
+
+  <main id="result" class="screen result-screen" hidden>
+    <div class="stars" aria-hidden="true"></div>
+    <section class="result-card">
+      <div class="trophy">🏆</div>
+      <p class="kicker">WORLD TOUR COMPLETE</p>
+      <h1 id="result-message"></h1>
+      <div class="score-ring"><strong id="final-score"></strong><span>/ 10</span></div>
+      <p id="result-copy"></p>
+      <button id="restart-button" class="primary-button" type="button"><span>새로운 10개 도전</span><b>↻</b></button>
+    </section>
+  </main>
+  <script src="countries.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
