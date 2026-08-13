@@ -54,15 +54,41 @@ function playSound(kind) {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (!AudioContextClass) return;
     const context = new AudioContextClass();
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.connect(gain); gain.connect(context.destination);
     const now = context.currentTime;
-    oscillator.type = kind === "wrong" ? "triangle" : "sine";
-    oscillator.frequency.setValueAtTime(kind === "correct" ? 523 : kind === "wrong" ? 190 : 350, now);
-    oscillator.frequency.linearRampToValueAtTime(kind === "correct" ? 784 : kind === "wrong" ? 130 : 460, now + .2);
-    gain.gain.setValueAtTime(.0001, now); gain.gain.exponentialRampToValueAtTime(.16, now + .02); gain.gain.exponentialRampToValueAtTime(.0001, now + .34);
-    oscillator.start(now); oscillator.stop(now + .35); oscillator.addEventListener("ended", () => context.close());
+    const melodies = {
+      correct: [
+        { frequency: 659.25, start: 0, duration: .18, volume: .15 },
+        { frequency: 523.25, start: .18, duration: .20, volume: .15 },
+        { frequency: 783.99, start: .39, duration: .42, volume: .19 }
+      ],
+      wrong: [
+        { frequency: 329.63, start: 0, duration: .17, volume: .10 },
+        { frequency: 261.63, start: .16, duration: .27, volume: .10 }
+      ],
+      next: [
+        { frequency: 523.25, start: 0, duration: .12, volume: .11 },
+        { frequency: 659.25, start: .10, duration: .13, volume: .12 },
+        { frequency: 783.99, start: .21, duration: .22, volume: .14 }
+      ]
+    };
+    const notes = melodies[kind] || melodies.next;
+    notes.forEach((note) => {
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      const start = now + note.start;
+      const end = start + note.duration;
+      oscillator.type = kind === "wrong" ? "triangle" : "sine";
+      oscillator.frequency.setValueAtTime(note.frequency, start);
+      gain.gain.setValueAtTime(.0001, start);
+      gain.gain.exponentialRampToValueAtTime(note.volume, start + .018);
+      gain.gain.exponentialRampToValueAtTime(.0001, end);
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.start(start);
+      oscillator.stop(end + .02);
+    });
+    const finish = Math.max(...notes.map((note) => note.start + note.duration)) + .12;
+    window.setTimeout(() => context.close(), finish * 1000);
   } catch (error) {
     console.warn("효과음을 재생할 수 없습니다.", error);
   }
